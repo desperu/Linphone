@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'org.jlleitschuh.gradle.ktlint'
+//    id 'org.jlleitschuh.gradle.ktlint'
 }
 
 static def getPackageName() {
@@ -31,21 +31,26 @@ task getGitVersion() {
 
     try {
         exec {
-            executable "git" args "describe", "--abbrev=0"
-            standardOutput = gitVersionStream
+//            println("desribe")
+//            executable "git" args "describe", "--abbrev=0"
+//            standardOutput = gitVersionStream
+            standardOutput = 'DemoIves'
         }
         exec {
+            println("rev-list")
             executable "git" args "rev-list", gitVersionStream.toString().trim() + "..HEAD", "--count"
             standardOutput = gitCommitsCount
         }
         exec {
+            println("rev-parse")
             executable "git" args "rev-parse", "--short", "HEAD"
             standardOutput = gitCommitHash
         }
-        exec {
-            executable "git" args "name-rev", "--name-only", "HEAD"
-            standardOutput = gitBranch
-        }
+//        exec {
+//            println("name-rev")
+//            executable "git" args "name-rev", "--name-only", "HEAD"
+//            standardOutput = gitBranch
+//        }
 
         if (gitCommitsCount.toString().toInteger() == 0) {
             gitVersion = gitVersionStream.toString().trim()
@@ -87,6 +92,13 @@ android {
         versionCode 4700
         versionName "${project.version}"
         applicationId getPackageName()
+    }
+
+
+    lintOptions {
+        checkReleaseBuilds false
+        //If you want to continue even if errors found use following line
+        abortOnError false
     }
 
     applicationVariants.all { variant ->
@@ -271,12 +283,12 @@ task generateContactsXml(type: Copy) {
 }
 project.tasks['preBuild'].dependsOn 'generateContactsXml'
 
-ktlint {
-    android = true
-    ignoreFailures = true
-}
+//ktlint {
+//    android = true
+//    ignoreFailures = true
+//}
 
-project.tasks['preBuild'].dependsOn 'ktlintFormat'
+//project.tasks['preBuild'].dependsOn 'ktlintFormat'
 
 if (crashlyticsEnabled) {
     afterEvaluate {
