@@ -192,7 +192,7 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
     val disableListener = object : SettingListenerStub() {
         override fun onBoolValueChanged(newValue: Boolean) {
             val params = account.params.clone()
-            params.registerEnabled = !newValue
+            params.isRegisterEnabled = !newValue
             account.params = params
         }
     }
@@ -239,7 +239,7 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
             }
 
             val params = account.params.clone()
-            params.registerEnabled = false
+            params.isRegisterEnabled = false
             account.params = params
 
             if (!registered) {
@@ -288,7 +288,7 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
     val outboundProxyListener = object : SettingListenerStub() {
         override fun onBoolValueChanged(newValue: Boolean) {
             val params = account.params.clone()
-            params.outboundProxyEnabled = newValue
+            params.isOutboundProxyEnabled = newValue
             account.params = params
         }
     }
@@ -308,7 +308,7 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
     val iceListener = object : SettingListenerStub() {
         override fun onBoolValueChanged(newValue: Boolean) {
             val params = account.params.clone()
-            params.natPolicy?.enableIce(newValue)
+            params.natPolicy?.isIceEnabled = newValue
             account.params = params
         }
     }
@@ -370,7 +370,7 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
     val escapePlusListener = object : SettingListenerStub() {
         override fun onBoolValueChanged(newValue: Boolean) {
             val params = account.params.clone()
-            params.dialEscapePlusEnabled = newValue
+            params.isDialEscapePlusEnabled = newValue
             account.params = params
         }
     }
@@ -424,19 +424,19 @@ class AccountSettingsViewModel(val account: Account) : GenericSettingsViewModel(
         userName.value = params.identityAddress?.username
         userId.value = account.findAuthInfo()?.userid
         domain.value = params.identityAddress?.domain
-        disable.value = !params.registerEnabled
+        disable.value = !params.isRegisterEnabled
         pushNotification.value = params.pushNotificationAllowed
         pushNotificationsAvailable.value = core.isPushNotificationAvailable
         proxy.value = params.serverAddress?.asStringUriOnly()
-        outboundProxy.value = params.outboundProxyEnabled
+        outboundProxy.value = params.isOutboundProxyEnabled
         stunServer.value = params.natPolicy?.stunServer
-        ice.value = params.natPolicy?.iceEnabled()
+        ice.value = params.natPolicy?.isIceEnabled
         avpf.value = params.avpfMode == AVPFMode.Enabled
         avpfRrInterval.value = params.avpfRrInterval
         expires.value = params.expires
         prefix.value = params.internationalPrefix
         dialPrefix.value = params.useInternationalPrefixForCallsAndChats
-        escapePlus.value = params.dialEscapePlusEnabled
+        escapePlus.value = params.isDialEscapePlusEnabled
     }
 
     private fun initTransportList() {

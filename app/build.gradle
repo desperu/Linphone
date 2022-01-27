@@ -31,10 +31,9 @@ task getGitVersion() {
 
     try {
         exec {
-//            println("desribe")
-//            executable "git" args "describe", "--abbrev=0"
-//            standardOutput = gitVersionStream
-            standardOutput = 'DemoIves'
+            println("desribe")
+            executable "git" args "describe", "--abbrev=0"
+            standardOutput = gitVersionStream
         }
         exec {
             println("rev-list")
@@ -46,11 +45,11 @@ task getGitVersion() {
             executable "git" args "rev-parse", "--short", "HEAD"
             standardOutput = gitCommitHash
         }
-//        exec {
-//            println("name-rev")
-//            executable "git" args "name-rev", "--name-only", "HEAD"
-//            standardOutput = gitBranch
-//        }
+        exec {
+            println("name-rev")
+            executable "git" args "name-rev", "--name-only", "HEAD"
+            standardOutput = gitBranch
+        }
 
         if (gitCommitsCount.toString().toInteger() == 0) {
             gitVersion = gitVersionStream.toString().trim()

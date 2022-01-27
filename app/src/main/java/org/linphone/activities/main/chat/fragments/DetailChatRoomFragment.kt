@@ -154,7 +154,7 @@ class DetailChatRoomFragment : MasterFragment<ChatRoomDetailFragmentBinding, Cha
 
         Compatibility.setLocusIdInContentCaptureSession(binding.root, chatRoom)
 
-        isSecure = chatRoom.currentParams.encryptionEnabled()
+        isSecure = chatRoom.currentParams.isEncryptionEnabled
 
         viewModel = ViewModelProvider(
             this,
@@ -372,7 +372,7 @@ class DetailChatRoomFragment : MasterFragment<ChatRoomDetailFragmentBinding, Cha
 
                         if (corePreferences.useInAppFileViewerForNonEncryptedFiles || content.isFileEncrypted) {
                             val preventScreenshots =
-                                viewModel.chatRoom.currentParams.encryptionEnabled()
+                                viewModel.chatRoom.currentParams.isEncryptionEnabled
                             when {
                                 FileUtils.isExtensionImage(path) -> navigateToImageFileViewer(
                                     preventScreenshots

@@ -63,12 +63,7 @@ class Compatibility {
             }
         }
 
-        fun getDeviceName(context: Context): String {
-            return when (Version.sdkAboveOrEqual(Version.API25_NOUGAT_71)) {
-                true -> Api25Compatibility.getDeviceName(context)
-                else -> Api21Compatibility.getDeviceName(context)
-            }
-        }
+        fun getDeviceName(context: Context): String = Api25Compatibility.getDeviceName(context)
 
         fun createPhoneListener(telephonyManager: TelephonyManager): PhoneStateInterface {
             return if (Version.sdkStrictlyBelow(Version.API31_ANDROID_12)) {
@@ -80,37 +75,17 @@ class Compatibility {
 
         /* UI */
 
-        fun setShowWhenLocked(activity: Activity, enable: Boolean) {
-            if (Version.sdkStrictlyBelow(Version.API27_OREO_81)) {
-                Api21Compatibility.setShowWhenLocked(activity, enable)
-            } else {
-                Api27Compatibility.setShowWhenLocked(activity, enable)
-            }
-        }
+        fun setShowWhenLocked(activity: Activity, enable: Boolean) =
+            Api27Compatibility.setShowWhenLocked(activity, enable)
 
-        fun setTurnScreenOn(activity: Activity, enable: Boolean) {
-            if (Version.sdkStrictlyBelow(Version.API27_OREO_81)) {
-                Api21Compatibility.setTurnScreenOn(activity, enable)
-            } else {
-                Api27Compatibility.setTurnScreenOn(activity, enable)
-            }
-        }
+        fun setTurnScreenOn(activity: Activity, enable: Boolean) =
+            Api27Compatibility.setTurnScreenOn(activity, enable)
 
-        fun requestDismissKeyguard(activity: Activity) {
-            if (Version.sdkStrictlyBelow(Version.API27_OREO_81)) {
-                Api21Compatibility.requestDismissKeyguard(activity)
-            } else {
-                Api27Compatibility.requestDismissKeyguard(activity)
-            }
-        }
+        fun requestDismissKeyguard(activity: Activity) =
+            Api27Compatibility.requestDismissKeyguard(activity)
 
-        fun getBitmapFromUri(context: Context, uri: Uri): Bitmap {
-            return if (Version.sdkStrictlyBelow(Version.API29_ANDROID_10)) {
-                Api21Compatibility.getBitmapFromUri(context, uri)
-            } else {
-                Api29Compatibility.getBitmapFromUri(context, uri)
-            }
-        }
+        fun getBitmapFromUri(context: Context, uri: Uri): Bitmap =
+            Api29Compatibility.getBitmapFromUri(context, uri)
 
         /* Notifications */
 
@@ -162,13 +137,8 @@ class Compatibility {
             }
         }
 
-        fun eventVibration(vibrator: Vibrator) {
-            if (Version.sdkAboveOrEqual(Version.API26_O_80)) {
-                Api26Compatibility.eventVibration(vibrator)
-            } else {
-                Api21Compatibility.eventVibration(vibrator)
-            }
-        }
+        fun eventVibration(vibrator: Vibrator) =
+            Api26Compatibility.eventVibration(vibrator)
 
         fun changeAudioRouteForTelecomManager(connection: NativeCallWrapper, route: Int) {
             if (Version.sdkAboveOrEqual(Version.API26_O_80)) {
@@ -224,25 +194,13 @@ class Compatibility {
             return false
         }
 
-        suspend fun addImageToMediaStore(context: Context, content: Content): Boolean {
-            if (Version.sdkAboveOrEqual(Version.API29_ANDROID_10)) {
-                return Api29Compatibility.addImageToMediaStore(context, content)
-            }
-            return Api21Compatibility.addImageToMediaStore(context, content)
-        }
+        suspend fun addImageToMediaStore(context: Context, content: Content): Boolean =
+            Api29Compatibility.addImageToMediaStore(context, content)
 
-        suspend fun addVideoToMediaStore(context: Context, content: Content): Boolean {
-            if (Version.sdkAboveOrEqual(Version.API29_ANDROID_10)) {
-                return Api29Compatibility.addVideoToMediaStore(context, content)
-            }
-            return Api21Compatibility.addVideoToMediaStore(context, content)
-        }
+        suspend fun addVideoToMediaStore(context: Context, content: Content): Boolean =
+            Api29Compatibility.addVideoToMediaStore(context, content)
 
-        suspend fun addAudioToMediaStore(context: Context, content: Content): Boolean {
-            if (Version.sdkAboveOrEqual(Version.API29_ANDROID_10)) {
-                return Api29Compatibility.addAudioToMediaStore(context, content)
-            }
-            return Api21Compatibility.addAudioToMediaStore(context, content)
-        }
+        suspend fun addAudioToMediaStore(context: Context, content: Content): Boolean =
+            Api29Compatibility.addAudioToMediaStore(context, content)
     }
 }

@@ -537,7 +537,7 @@ class NotificationsManager(private val context: Context) {
             Call.State.OutgoingRinging, Call.State.OutgoingProgress, Call.State.OutgoingInit, Call.State.OutgoingEarlyMedia -> {
                 callActivity = OutgoingCallActivity::class.java
                 stringResourceId = R.string.call_notification_outgoing
-                iconResourceId = if (call.params.videoEnabled()) {
+                iconResourceId = if (call.params.isVideoEnabled) {
                     R.drawable.topbar_videocall_notification
                 } else {
                     R.drawable.topbar_call_notification
@@ -546,7 +546,7 @@ class NotificationsManager(private val context: Context) {
             else -> {
                 callActivity = CallActivity::class.java
                 stringResourceId = R.string.call_notification_active
-                iconResourceId = if (call.currentParams.videoEnabled()) {
+                iconResourceId = if (call.currentParams.isVideoEnabled) {
                     R.drawable.topbar_videocall_notification
                 } else {
                     R.drawable.topbar_call_notification
