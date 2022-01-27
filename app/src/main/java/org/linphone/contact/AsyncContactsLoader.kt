@@ -19,6 +19,7 @@
  */
 package org.linphone.contact
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.os.AsyncTask
@@ -51,6 +52,7 @@ class AsyncContactsLoader(private val context: Context) :
         Log.i("[Contacts Loader] Synchronization started")
     }
 
+    @SuppressLint("Range")
     override fun doInBackground(vararg args: Void): AsyncContactsData {
         val data = AsyncContactsData()
         if (isCancelled) return data

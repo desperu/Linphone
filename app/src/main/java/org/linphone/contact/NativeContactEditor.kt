@@ -19,6 +19,7 @@
  */
 package org.linphone.contact
 
+import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.ContentUris
 import android.net.Uri
@@ -32,6 +33,7 @@ import org.linphone.core.tools.Log
 import org.linphone.utils.AppUtils
 import org.linphone.utils.PermissionHelper
 
+@SuppressLint("Range")
 class NativeContactEditor(val contact: NativeContact) {
     companion object {
         fun createAndroidContact(accountName: String?, accountType: String?): Long {

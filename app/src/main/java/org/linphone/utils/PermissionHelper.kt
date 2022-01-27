@@ -76,9 +76,12 @@ class PermissionHelper private constructor(private val context: Context) {
         return hasPermission(Manifest.permission.RECORD_AUDIO)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun hasTelecomManagerPermissions(): Boolean {
-        return hasPermission(Manifest.permission.READ_PHONE_NUMBERS) &&
-            hasPermission(Manifest.permission.MANAGE_OWN_CALLS)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            hasPermission(Manifest.permission.READ_PHONE_NUMBERS) &&
+                hasPermission(Manifest.permission.MANAGE_OWN_CALLS)
+        } else {
+            false
+        }
     }
 }

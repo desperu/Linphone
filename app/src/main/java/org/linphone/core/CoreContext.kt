@@ -209,7 +209,7 @@ class CoreContext(val context: Context, coreConfig: Config) {
                     }
                 }
 
-                if (corePreferences.routeAudioToSpeakerWhenVideoIsEnabled && call.currentParams.videoEnabled()) {
+                if (corePreferences.routeAudioToSpeakerWhenVideoIsEnabled && call.currentParams.isVideoEnabled) {
                     // Do not turn speaker on when video is enabled if headset or bluetooth is used
                     if (!AudioRouteUtils.isHeadsetAudioRouteAvailable() && !AudioRouteUtils.isBluetoothAudioRouteCurrentlyUsed(
                             call
@@ -436,11 +436,11 @@ class CoreContext(val context: Context, coreConfig: Config) {
         val params = core.createCallParams(call)
 
         if (accept) {
-            params?.enableVideo(true)
-            core.enableVideoCapture(true)
-            core.enableVideoDisplay(true)
+            params?.isVideoEnabled = true
+            core.isVideoCaptureEnabled = true
+            core.isVideoDisplayEnabled = true
         } else {
-            params?.enableVideo(false)
+            params?.isVideoEnabled = false
         }
 
         call.acceptUpdate(params)
@@ -452,7 +452,7 @@ class CoreContext(val context: Context, coreConfig: Config) {
         params?.recordFile = LinphoneUtils.getRecordingFilePathForAddress(call.remoteAddress)
         if (LinphoneUtils.checkIfNetworkHasLowBandwidth(context)) {
             Log.w("[Context] Enabling low bandwidth mode!")
-            params?.enableLowBandwidth(true)
+            params?.isLowBandwidthEnabled = true
         }
         call.acceptWithParams(params)
     }
@@ -529,7 +529,7 @@ class CoreContext(val context: Context, coreConfig: Config) {
         }
         if (LinphoneUtils.checkIfNetworkHasLowBandwidth(context)) {
             Log.w("[Context] Enabling low bandwidth mode!")
-            params.enableLowBandwidth(true)
+            params.isLowBandwidthEnabled = true
         }
         params.recordFile = LinphoneUtils.getRecordingFilePathForAddress(address)
 
@@ -543,7 +543,7 @@ class CoreContext(val context: Context, coreConfig: Config) {
         }
 
         if (corePreferences.sendEarlyMedia) {
-            params.enableEarlyMediaSending(true)
+            params.isEarlyMediaSendingEnabled = true
         }
 
         val call = core.inviteAddressWithParams(address, params)
@@ -582,7 +582,7 @@ class CoreContext(val context: Context, coreConfig: Config) {
         return if (conference != null && conference.isIn) {
             conference.currentParams.isVideoEnabled
         } else {
-            core.currentCall?.currentParams?.videoEnabled() ?: false
+            core.currentCall?.currentParams?.isVideoEnabled ?: false
         }
     }
 
